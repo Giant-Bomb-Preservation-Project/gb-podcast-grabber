@@ -10,14 +10,21 @@ import tqdm
 from dotenv import load_dotenv
 from multiprocessing import cpu_count
 from multiprocessing.pool import ThreadPool
+import chardet
 
 load_dotenv()
 
 apikey = os.getenv('apikey')
 
-read_xml = open('beastcast_premium.xml', 'r')
+# change show xml here
+with open('bombcast.xml', 'rb') as f:
+    xml_bytes = f.read()
+encoding = chardet.detect(xml_bytes)['encoding']
+xml_string = xml_bytes.decode(encoding)
+beast = xmltodict.parse(xml_string)
 
-beast=  xmltodict.parse(read_xml.read())
+# old way
+#beast =  xmltodict.parse(read_xml.read())
 
 podcasts = beast['rss']['channel']['item']
 
@@ -26,7 +33,7 @@ upload = []
 urls = []
 fns = []
 
-folder = 'Beastcast Premium'
+folder = 'Giant Bombcast'
 curdir = os.getcwd()
 dir = os.path.join(curdir,folder)
 
