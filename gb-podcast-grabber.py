@@ -82,12 +82,15 @@ def zippy():
 # Search through every show and get variables for naming and CSV writing
 podbar = tqdm.tqdm(range(len(podcasts)), desc="Gathering download info")
 for i in podbar:
-    title = podcasts[i].get('title')
-    link = podcasts[i].get('link')
-    desc = podcasts[i].get('description')
-    pubdate = podcasts[i].get('pubDate')
-    url = podcasts[i]['media:content'].get('@url')
-    guid = podcasts[i]['guid'].get('#text')
+    try:
+        title = podcasts[i].get('title')
+        link = podcasts[i].get('link')
+        desc = podcasts[i].get('description')
+        pubdate = podcasts[i].get('pubDate')
+        url = podcasts[i]['media:content'].get('@url')
+        guid = podcasts[i]['guid'].get('#text')
+    except KeyError:
+        continue
 
     # Translate insane date format        
     trunc_date = pubdate[5:16]
