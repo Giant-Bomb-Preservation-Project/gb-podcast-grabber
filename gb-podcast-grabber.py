@@ -90,6 +90,7 @@ for i in podbar:
         url = podcasts[i]['media:content'].get('@url')
         guid = podcasts[i]['guid'].get('#text')
     except KeyError:
+        print(f'Error for Title: {title} // GUID: {guid} // link: {link}')
         continue
 
     # Translate insane date format        
